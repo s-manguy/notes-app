@@ -1,3 +1,5 @@
+/* 
+// Original code commented on 20240112
 .App {
   text-align: center;
 }
@@ -35,4 +37,107 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+:root {
+  font-size: 62.54%;
+  --spacing: 2rem;
+}
+
+*, ::before, ::after {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: var(--spacing);
+  background-color: lightgray;
+}
+
+.app-container {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media screen and (min-width: 600px) {
+  .app-container {
+    grid-template-columns: 20rem 1fr;
+    gap: var(--spacing);
+  }
+}
+
+/* the form */
+.note-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing);
+}
+
+.note-form input,
+.note-form textarea,
+.note-form button {
+  border-radius: 5px;
+  padding: calc(var(--spacing)/2);
+  font-size: 1.6rem;
+}
+
+.note-form input,
+.note-form textarea {
+  border: 1px solid black;
+}
+
+.note-form button {
+  border: none;
+  background-color: rgb(64, 154, 184);
+  color: white;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.note-form button:hover {
+  background-color: rgb(106, 175, 198);
+  text-transform: uppercase;
+}
+
+/* the notes */
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(autofill, minmax(250px, 1fr));
+  grid-auto-rows: minmax(250px, auto);
+  gap: var(--spacing);
+}
+
+.note-item {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: calc(var(--spacing)/2);
+  background-color: #f9f9f9;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.note-header {
+  display: flex; 
+  justify-content: flex-end;
+}
+
+.note-header button {
+  background-color: transparent;
+  border: none;
+  font-size: 1.6rem;
+  padding: calc(var(--spacing)/5); /* font-size + padding for accessible touch area */
+  cursor: pointer;
+  max-width: fit-content;
+}
+
+h2 {
+  font-size: 2.4rem;
+  font-weight: bold;
+  margin-bottom: var(--spacing);
+}
+
+.note-item p {
+  font-size: 1.6rem;
 }
