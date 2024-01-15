@@ -36,9 +36,29 @@ function App() {
       content: "bla bla note6",
     }
   ];
-  
+
   const [notes, setNotes] = useState(dummyNotes);
 
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
+  const newNote = {
+    id: notes.length + 1,
+    title: title,
+    content: content,
+  };
+
+  const handleAddNote = (event) => {
+    event.preventDefault();
+    // console.log("title: ", title);
+    // console.log("content: ", content);
+    setNotes([newNote, ...notes]);
+    setTitle(''); // Clear the input
+    setContent(''); // Clear the input
+  };
+
+
+  
   return (
     // Initial code to display the react info commented on 20240112
     // <div className="App">
@@ -58,15 +78,30 @@ function App() {
     //   </header>
     // </div>
     <div className='app-container'>
-      <form className='note-form'>
-        <input type='text' placeholder='Title' required />
-        <textarea placeholder='Content' row={10} required />
+      <form 
+        className='note-form'
+        onSubmit={handleAddNote}
+        >
+        <input 
+          name="title"
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
+          type='text' 
+          placeholder='Title' 
+          required />
+        <textarea 
+          name="content"
+          value={content}
+          onChange={(event) => setContent(event.target.value)}
+          placeholder='Content' 
+          row={10} 
+          required />
         <button type='submit'>Add note</button>
       </form>
       <div className='notes-grid'>
         {
           notes.map((note) => (
-            <div className='note-item'>
+            <div className='note-item' key={note.id}>
               <div className='note-header'>
                 <button>X</button>
               </div>
