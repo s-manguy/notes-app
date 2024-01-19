@@ -38,9 +38,9 @@ function App() {
   ];
 
   const [notes, setNotes] = useState(dummyNotes);
-
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState(''); // Void by default
+  const [content, setContent] = useState(''); // Void by default
+  const [selectedNote, setSelectedNote] = useState(null); // Not selected by default
 
   const newNote = {
     id: notes.length + 1,
@@ -52,12 +52,50 @@ function App() {
     event.preventDefault();
     // console.log("title: ", title);
     // console.log("content: ", content);
-    setNotes([newNote, ...notes]);
+    setNotes([newNote, ...notes]); // The most recent notes is the first displayed
     setTitle(''); // Clear the input
     setContent(''); // Clear the input
+    console.log(newNote);
+    console.log(notes);
   };
 
+  const handleNoteClick = (note) => {
+    setSelectedNote(note); // Save the clicked note
+    console.log(note);
+    setTitle(note.title); // Populate the title in the form
+    setContent(note.content); // Populate the title in the form
+  };
 
+  const handleUpdateNote = (event) => {
+    // Prevent the form from automatically submitting when the "Save" button is clicked.
+    event.preventDefault();
+
+    // Check if a note is selected. If not, exits the function early to prevent potential errors.
+    if (!selectedNote) {
+      return;
+    }
+
+    // Form the updated note based on the selected note's id and the updated title and content.
+    const updatedNote = {
+      id: selectedNote.id,
+      title: title,
+      content: content, 
+    };
+
+    // Generate the a new array of notes, replacing the selected note with the updated one where the id matches.
+    const updatedNotesList = notes.map((note) => (note.id === selectedNote.id ? updatedNote : note));
+
+    setNotes(updatedNotesList); // Set the updated array in the state.
+    setTitle(""); // Clean the form by resetting the value to the initial state.
+    setContent(""); // Clean the form by resetting the value to the initial state.
+    setSelectedNote(null); // Deselect the note by resetting the value to the initial state.
+  };
+
+  const handleCancel = () => {
+    setTitle(""); // Clean the form by resetting the value to the initial state.
+    setContent(""); // Clean the form by resetting the value to the initial state.
+    setSelectedNote(null); // Deselect the note by resetting the value to the initial state.
+  };
   
   return (
     // Initial code to display the react info commented on 20240112
@@ -80,7 +118,7 @@ function App() {
     <div className='app-container'>
       <form 
         className='note-form'
-        onSubmit={handleAddNote}
+        onSubmit={(event) => (selectedNote ? handleUpdateNote(event) : handleAddNote(event))}
         >
         <input 
           name="title"
@@ -96,12 +134,21 @@ function App() {
           placeholder='Content' 
           row={10} 
           required />
-        <button type='submit'>Add note</button>
+        {selectedNote ? (
+          <div className='edit-buttons'>
+            <button type='submit'>Save</button>
+            <button onClick={handleCancel}>Cancel</button>
+          </div>
+        )
+        : (
+          <button type='submit'>Add note</button>
+      
+        )}
       </form>
       <div className='notes-grid'>
         {
           notes.map((note) => (
-            <div className='note-item' key={note.id}>
+            <div className='note-item' key={note.id} onClick={() => handleNoteClick(note)}>
               <div className='note-header'>
                 <button>X</button>
               </div>
