@@ -97,6 +97,16 @@ function App() {
     setSelectedNote(null); // Deselect the note by resetting the value to the initial state.
   };
   
+  // Check the note must be deleted with confirm window. Added by Sandrine MANGUY
+  const deleteNote = (event, noteId) => {
+    // Prevent the deleteNote event from interfering with the click event on the note itself.
+    event.stopPropagation();
+    // Create an array composed of all the notes excepted the one that must be deleted.
+    const updatedNotes = notes.filter((note) => note.id !== noteId);
+  
+    setNotes(updatedNotes); // Set the updated array in the state.
+  }
+
   return (
     // Initial code to display the react info commented on 20240112
     // <div className="App">
@@ -150,7 +160,7 @@ function App() {
           notes.map((note) => (
             <div className='note-item' key={note.id} onClick={() => handleNoteClick(note)}>
               <div className='note-header'>
-                <button>X</button>
+                <button onClick={(event) => {if(window.confirm("Please confirm you want to delete this note.")) {deleteNote(event, note.id)}}}>X</button>
               </div>
               <h2>{note.title}</h2>
               <p>{note.content}</p>  
