@@ -1,0 +1,48 @@
+/* the form */
+.note-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing);
+    padding-bottom: var(--spacing); /* Added by Sandrine MANGUY */
+  }
+  
+  .note-form input,
+  .note-form textarea,
+  .note-form button {
+    border-radius: 5px;
+    padding: calc(var(--spacing)/2);
+    font-size: 1.6rem;
+  }
+  
+  .note-form input,
+  .note-form textarea {
+    border: 1px solid black;
+  }
+  
+  .note-form button {
+    border: none;
+    background-color: rgb(64, 154, 184);
+    color: white;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  
+  .note-form button:hover {
+    background-color: rgb(106, 175, 198);
+    text-transform: uppercase;
+  }
+  
+  .edit-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    gap: calc(var(--spacing) / 4);
+  }
+  
+  .edit-buttons button {
+    flex: 1;
+  }
+  
+  .edit-buttons button:last-of-type {
+    background-color: grey;
+    color: white;
+  }

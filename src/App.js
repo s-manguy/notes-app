@@ -1,6 +1,8 @@
 // commented on 20240112 because only needed for the React presentation
 // import logo from './logo.svg';
-import './App.css';
+import './Styles/App.css';
+import './Styles/Form.css';
+import './Styles/Note.css';
 import { useState } from 'react';
 
 function App() {
