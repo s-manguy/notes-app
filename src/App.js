@@ -59,12 +59,25 @@ function App() {
     console.log(notes);
   };
 
+  const handleNoteClickedAspect = (noteId) => {
+    let selectedNoteId = document.getElementById(noteId);
+    selectedNoteId.style.border = "1px solid black";
+    selectedNoteId.style.boxShadow = "3px 3px 10px";
+  }
+
   const handleNoteClick = (note) => {
     setSelectedNote(note); // Save the clicked note
-    console.log(note);
+    // console.log(note);
     setTitle(note.title); // Populate the title in the form
     setContent(note.content); // Populate the title in the form
+    handleNoteClickedAspect(note.id);
   };
+
+  const handleNoteUnclickedAspect = (noteId) => {
+    let selectedNoteId = document.getElementById(noteId);
+    selectedNoteId.style.border = "1px solid #ccc";
+    selectedNoteId.style.boxShadow = "none";
+  }
 
   const handleUpdateNote = (event) => {
     // Prevent the form from automatically submitting when the "Save" button is clicked.
@@ -85,6 +98,7 @@ function App() {
     // Generate the a new array of notes, replacing the selected note with the updated one where the id matches.
     const updatedNotesList = notes.map((note) => (note.id === selectedNote.id ? updatedNote : note));
 
+    handleNoteUnclickedAspect(selectedNote.id);
     setNotes(updatedNotesList); // Set the updated array in the state.
     setTitle(""); // Clean the form by resetting the value to the initial state.
     setContent(""); // Clean the form by resetting the value to the initial state.
@@ -92,6 +106,7 @@ function App() {
   };
 
   const handleCancel = () => {
+    handleNoteUnclickedAspect(selectedNote.id); // Remove the selected note aspect by resetting the initial CSS values.
     setTitle(""); // Clean the form by resetting the value to the initial state.
     setContent(""); // Clean the form by resetting the value to the initial state.
     setSelectedNote(null); // Deselect the note by resetting the value to the initial state.
@@ -152,13 +167,12 @@ function App() {
         )
         : (
           <button type='submit'>Add note</button>
-      
         )}
       </form>
       <div className='notes-grid'>
         {
           notes.map((note) => (
-            <div className='note-item' key={note.id} onClick={() => handleNoteClick(note)}>
+            <div className='note-item' key={note.id} id={note.id} onClick={() => handleNoteClick(note)}>
               <div className='note-header'>
                 <button onClick={(event) => {if(window.confirm("Please confirm you want to delete this note.")) {deleteNote(event, note.id)}}}>X</button>
               </div>

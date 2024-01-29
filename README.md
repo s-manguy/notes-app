@@ -1,4 +1,56 @@
-# Getting Started with Create React App
+# Full Stack Project - Create A Notes App Using React and Node.js
+This project is based on a [Tutorial written by Chris Blakely](https://www.freecodecamp.org/news/full-stack-project-tutorial-create-a-notes-app-using-react-and-node-js/).
+
+***Important : Please note that:***
+* ***I have not used Typescript on my version of the project;***
+* ***I have improved some parts...***
+
+The full stack notes app has been built from scratch, using React, Node.js and PostgreSQL with the following features:
+*  Create/Edit/Delete Notes
+*  Validation on the UI and Backend
+*  Responsive on mobile screens
+
+
+## Prerequisites
+*  Some knowledge about web development concepts (frontend, backend, databases, API's, REST).
+*  Some knowledge of JavaScript (variables, functions, objects, arrays, and so on).
+*  Basic understanding on React (how to create components, add styles, work with state).
+*  Basic understanding on Node.js/Express (working with APIs).
+
+## App building
+### Create the UI
+#### Step 1 - Create a New React App
+#### Step 2 - Add UI Elements
+In the App.js file, in the return(), add:
+* the form including:
+  * an input for the note title,
+  * a texterea field for the note content,
+  * a submit button whose text is "Add Note";
+* the grid where the notes will be displayed;
+* a note.
+#### Step 3 - Add CSS
+#### Step 4 - Add Dummy Notes - Test Responsiveness
+#### Step 5 - Add the Note functionnality - Save Note Form
+#### Step 6 - Add the Update Note Functionnality
+#### step 7 - Add the Delete Note Functionnality
+### Create the Backend
+### Connect UI to backend
+
+## What I have improved
+### Improved accessibility:
+* given the notes a yellow background same as the post-it;
+* added a padding bottom to the form to avoid the first note touch the form;
+* changed the "cancel" button background color from pink to grey when updating a note;
+* added a note aspect change when selected and removed when unselected (the updating changes are canceled or saved);
+* added the confirm dialog modal before deleting a note. 
+
+To improve :
+!!! fix the form at the top to make it accessible at any moment
+* note color selector dpending on the theme of the note
+## Result
+
+
+<!-- # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -67,4 +119,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 ### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify) -->
