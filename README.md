@@ -42,6 +42,7 @@ In the App.js file, in the return(), add:
 * added a padding bottom to the form to avoid the first note touch the form;
 * changed the "cancel" button background color from pink to grey when updating a note;
 * added a note aspect change when selected and removed when unselected (the updating changes are canceled or saved);
+* prevented the user from selecting a new note when updating one (the changes are automatically cancelled and the aspect of the note being updated is reinitialized);
 * added the confirm dialog modal before deleting a note. 
 
 To improve :
