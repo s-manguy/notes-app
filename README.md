@@ -34,20 +34,75 @@ In the App.js file, in the return(), add:
 #### Step 6 - Add the Update Note Functionnality
 #### step 7 - Add the Delete Note Functionnality
 ### Create the Backend
+#### Setup
+* I have not installed typescript.
+* I have added the "start" script in the package.json file but the indicated command didn't run so I have changed "npx nodemon" to "nodemon ./src/index.js" indicating the file path.
+* I have added a get route at the root 
+```javascript
+app.get('/', (req, res) => {
+  res.send('Welcome to my server!');
+});
+```
+#### Create a Postgres Database
+* I have created a free plan [ElephantSQL](https://www.elephantsql.com/) account.
+* Remark: Of course, it is possible to run SQL Query as indicated in the tutorial but... as there is no table created the given SQL command will run ! Moreover, as Prisma is used to create the table, it is better not to run SQL command before setting Prisma.
+#### Connect to DB from Node.js backend using Prisma
+* The connection URL can be found in the instance details. Do not forget to replace *** by the password.
+#### Create Endpoints
 ### Connect UI to backend
+* I have created the code for the handleUpdateNote as the one indicated in the tutorial is a copy-paste of the handleAddNote.
+```javascript
+const handleUpdateNote = async (event) => {
+    // Prevent the form from automatically submitting when the "Save" button is clicked.
+    event.preventDefault();
 
-## What I have improved
-### Improved accessibility:
-* given the notes a yellow background same as the post-it;
-* added a padding bottom to the form to avoid the first note touch the form;
-* changed the "cancel" button background color from pink to grey when updating a note;
-* added a note aspect change when selected and removed when unselected (the updating changes are canceled or saved);
-* prevented the user from selecting a new note when updating one (the changes are automatically cancelled and the aspect of the note being updated is reinitialized);
-* added the confirm dialog modal before deleting a note. 
+    // Check if a note is selected. If not, exits the function early to prevent potential errors.
+    if (!selectedNote) {
+      return;
+    }
 
-To improve :
-!!! fix the form at the top to make it accessible at any moment
-* note color selector dpending on the theme of the note
+    try {
+      const response = await fetch (
+        `http://localhost:5000/api/notes/${selectedNote.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title,
+            content,
+          }),
+        }
+      );
+
+      const updatedNote = await response.json();
+
+      // Generate the a new array of notes, replacing the selected note with the updated one where the id matches.
+      const updatedNotesList = notes.map((note) => (note.id === selectedNote.id ? updatedNote : note));
+
+      setNotes(updatedNotesList); // Set the updated array in the state.
+      setTitle(""); // Clean the form by resetting the value to the initial state.
+      setContent(""); // Clean the form by resetting the value to the initial state.
+      setSelectedNote(null); // Deselect the note by resetting the value to the initial state.
+    } catch (error) {
+      console.log(error);
+    }  
+  };
+``` 
+
+## Improvements 
+### I have improved the accessibility by:
+* giving the notes a yellow background same as the post-it;
+* adding a padding bottom to the form to avoid the first note touch the form;
+* changing the "cancel" button background color from pink to grey when updating a note;
+* adding a note aspect change when selected and removed when unselected (the updating changes are canceled or saved);
+* preventing the user from selecting a new note when updating one (the changes are automatically cancelled and the aspect of the note being updated is reinitialized);
+* adding the confirm dialog modal before deleting a note.
+### Possible improvments in the future
+* fix the form at the top to make it accessible at any moment;
+* note color selector depending on the theme of the note.
+
 ## Result
 
 

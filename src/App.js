@@ -3,7 +3,6 @@ import './Styles/Form.css';
 import './Styles/Note.css';
 import { useState, useEffect } from 'react';
 
-
 function App() {
   //  Populate the initial empty array with the data fetch from the API through the fetchNotes function
   const [notes, setNotes] = useState([]);
