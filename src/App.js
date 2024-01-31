@@ -198,14 +198,18 @@ function App() {
         className='note-form'
         onSubmit={(event) => (selectedNote ? handleUpdateNote(event) : handleAddNote(event))}
         >
+        <label htmlFor="title"  className='sr-only'>Note Title</label>
         <input 
+          id="title"
           name="title"
           ref={titleRef}
           onBlur={handleInputOnBlur}
           type='text' 
           placeholder='Title' 
           required />
+        <label htmlFor="content" className='sr-only'>Note Title</label>
         <textarea 
+          id="content"
           name="content"
           ref={contentRef}
           onBlur={handleTextareaOnBlur}

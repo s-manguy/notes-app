@@ -97,7 +97,8 @@ const handleUpdateNote = async (event) => {
 * changing the "cancel" button background color from pink to grey when updating a note;
 * adding a note aspect change when selected and removed when unselected (the updating changes are canceled or saved);
 * preventing the user from selecting a new note when updating one (the changes are automatically cancelled and the aspect of the note being updated is reinitialized);
-* adding the confirm dialog modal before deleting a note.
+* adding the confirm dialog modal before deleting a note;
+* adding label to each form field and a sr-only class to improve the screen reader accessibility.
 ### I have improved the performance by:
 * using the useRef hook on the form fields (that means :
   * replace value and onChange attributes by ref and onBlur attributes in the input and teaxtarea HTML tags, 
