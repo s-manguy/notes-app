@@ -49,6 +49,7 @@ function App() {
     }
   }, []);// Only runs when the component is first mounted
 
+  // Added to improve the accessibility
   const handleScrollToTop = () => {
       window.scrollTo({
         top: 0,
@@ -104,6 +105,7 @@ function App() {
   /*//////////// */
   /* Update note */
   /*//////////// */
+  // Added to improve the accessibility and the UX
   const handleNoteClickedAspect = (noteId) => {
     let selectedNoteId = document.getElementById(noteId);
     selectedNoteId.style.border = "1px solid black";
@@ -113,22 +115,22 @@ function App() {
   const handleNoteClick = (note) => {
     // prevent the user from selecting many notes and make him cancel the previous selection
     if (selectedNote === null) {
-      // scroll to the filled form to apply changes
-      handleScrollToTop();
+      handleScrollToTop();// Added to scroll to the filled form to apply changes
       
       setSelectedNote(note); // Save the clicked note
       // console.log(note);
       setTitle(note.title); // Set the title in the state
       setContent(note.content); // Set the title in the state
-      titleRef.current.value = note.title; // Populate the title in the form
-      contentRef.current.value = note.content; // Populate the title in the form
+      titleRef.current.value = note.title; // Added to Populate the title in the form improving performance
+      contentRef.current.value = note.content; // Added to Populate the title in the form improving performance
 
-      handleNoteClickedAspect(note.id); 
+      handleNoteClickedAspect(note.id); // Added to improve the UX
     } else {
       handleCancel();
     }
   };
 
+  // Added to improve the accessibility and the UX
   const handleNoteUnclickedAspect = (noteId) => {
     let selectedNoteId = document.getElementById(noteId);
     selectedNoteId.style.border = "1px solid #ccc";
@@ -278,8 +280,7 @@ function App() {
           className="scroll-button"
           onClick={handleScrollToTop}
         >^</button>
-      )
-      }
+      )}
     </div>
   );
 }
