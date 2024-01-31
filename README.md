@@ -99,8 +99,8 @@ const handleUpdateNote = async (event) => {
 * preventing the user from selecting a new note when updating one (the changes are automatically cancelled and the aspect of the note being updated is reinitialized);
 * adding the confirm dialog modal before deleting a note;
 * adding label to each form field and a sr-only class to improve the screen reader accessibility;
-* adding a scroll animation to the top of the form (by adding a ref to the container) when clicking on a note to update it in the form;
-* .
+* adding a scroll animation to the top of the form when clicking on a note to update it in the form;
+* adding a scroll button fiwed on the bottom right screen corner which appears when the pageYoffset is higher to 300px.
 ### I have improved the performance by:
 * using the useRef hook on the form fields (that means :
   * replace value and onChange attributes by ref and onBlur attributes in the input and teaxtarea HTML tags, 

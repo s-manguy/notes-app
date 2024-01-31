@@ -11,7 +11,7 @@ function App() {
   const [content, setContent] = useState(''); // Void by default
   const contentRef = useRef(null); // Added by Sandrine MANGUY for performance optimization
   const [selectedNote, setSelectedNote] = useState(null); // Not selected by default
-  const containerRef = useRef(null); // To be able to scroll to this element
+  const [visibilityButton, setVisibilityButton] = useState(false);
 
   // Check the rendering number
   console.log("render");
@@ -35,6 +35,26 @@ function App() {
     //  Call the fetchNotes function
     fetchNotes();
   }, []); // Only runs when the component is first mounted
+
+  // Scroll button visibility
+  useEffect(() => {
+    const handleScrollButtonVisibility = () => {
+      window.scrollY > 300 ? setVisibilityButton(true) : setVisibilityButton(false);
+    }
+
+    window.addEventListener('scroll', handleScrollButtonVisibility);
+
+    return () => {
+      window.removeEventListener('scroll', handleScrollButtonVisibility);
+    }
+  }, []);// Only runs when the component is first mounted
+
+  const handleScrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    })
+  };
 
   // Added to set the input value before sending the POST and PUT requests
   const handleInputOnBlur = () => {
@@ -94,10 +114,7 @@ function App() {
     // prevent the user from selecting many notes and make him cancel the previous selection
     if (selectedNote === null) {
       // scroll to the filled form to apply changes
-      window.scrollTo({
-        top: containerRef.current.offsetTop,
-        behavior: 'smooth'
-      });
+      handleScrollToTop();
       
       setSelectedNote(note); // Save the clicked note
       // console.log(note);
@@ -200,9 +217,7 @@ function App() {
   };
 
   return (
-    <div 
-      className='app-container'
-      ref={containerRef}>
+    <div className='app-container'>
       <form 
         className='note-form'
         onSubmit={(event) => (selectedNote ? handleUpdateNote(event) : handleAddNote(event))}
@@ -244,20 +259,27 @@ function App() {
             id={note.id} 
             onClick={() => handleNoteClick(note)}
           >
-          <div className='note-header'>
-            <button 
-            onClick={(event) => {
-              if(window.confirm("Please confirm you want to delete this note.")) {
-                deleteNote(event, note.id)
-              }}}
-            >X</button>
+            <div className='note-header'>
+              <button 
+                onClick={(event) => {
+                  if(window.confirm("Please confirm you want to delete this note.")) {
+                  deleteNote(event, note.id)
+                }}}
+              >X</button>
+            </div>
+            <h2>{note.title}</h2>
+            <p>{note.content}</p>  
           </div>
-          <h2>{note.title}</h2>
-          <p>{note.content}</p>  
-        </div>
-            ))
-          }
-        </div>
+          ))
+        }
+      </div>
+      { visibilityButton && (
+        <button 
+          className="scroll-button"
+          onClick={handleScrollToTop}
+        >^</button>
+      )
+      }
     </div>
   );
 }
