@@ -33,6 +33,7 @@ In the App.js file, in the return(), add:
 #### Step 6 - Add the Update Note Functionnality
 #### step 7 - Add the Delete Note Functionnality
 ### Create the Backend
+Please refer to [notes-app-server](https://github.com/s-manguy/notes-app-server)
 #### Setup
 * I have not installed typescript.
 * I have added the "start" script in the package.json file but the indicated command didn't run so I have changed "npx nodemon" to "nodemon ./src/index.js" indicating the file path.
@@ -112,7 +113,9 @@ const handleUpdateNote = async (event) => {
 * note color selector depending on the theme of the note.
 
 ## Result
-
+![mobile version](https://github.com/s-manguy/notes-app/blob/main/mobile_version.png)
+![tablet version](https://github.com/s-manguy/notes-app/blob/main/Ipad_version.png)
+![desktop version](https://github.com/s-manguy/notes-app/blob/main/Desktop_version.png)
 
 <!-- # Getting Started with Create React App
 
