@@ -11,6 +11,7 @@ function App() {
   const [content, setContent] = useState(''); // Void by default
   const contentRef = useRef(null); // Added by Sandrine MANGUY for performance optimization
   const [selectedNote, setSelectedNote] = useState(null); // Not selected by default
+  const containerRef = useRef(null); // To be able to scroll to this element
 
   // Check the rendering number
   console.log("render");
@@ -92,6 +93,12 @@ function App() {
   const handleNoteClick = (note) => {
     // prevent the user from selecting many notes and make him cancel the previous selection
     if (selectedNote === null) {
+      // scroll to the filled form to apply changes
+      window.scrollTo({
+        top: containerRef.current.offsetTop,
+        behavior: 'smooth'
+      });
+      
       setSelectedNote(note); // Save the clicked note
       // console.log(note);
       setTitle(note.title); // Set the title in the state
@@ -193,7 +200,9 @@ function App() {
   };
 
   return (
-    <div className='app-container'>
+    <div 
+      className='app-container'
+      ref={containerRef}>
       <form 
         className='note-form'
         onSubmit={(event) => (selectedNote ? handleUpdateNote(event) : handleAddNote(event))}

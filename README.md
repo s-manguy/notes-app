@@ -98,7 +98,9 @@ const handleUpdateNote = async (event) => {
 * adding a note aspect change when selected and removed when unselected (the updating changes are canceled or saved);
 * preventing the user from selecting a new note when updating one (the changes are automatically cancelled and the aspect of the note being updated is reinitialized);
 * adding the confirm dialog modal before deleting a note;
-* adding label to each form field and a sr-only class to improve the screen reader accessibility.
+* adding label to each form field and a sr-only class to improve the screen reader accessibility;
+* adding a scroll animation to the top of the form (by adding a ref to the container) when clicking on a note to update it in the form;
+* .
 ### I have improved the performance by:
 * using the useRef hook on the form fields (that means :
   * replace value and onChange attributes by ref and onBlur attributes in the input and teaxtarea HTML tags, 
@@ -106,9 +108,8 @@ const handleUpdateNote = async (event) => {
   * reset the input and textarea value to '' or null by resetting the ref values when ending the POST, PUT requests and when canceling the changes);
 * 
 ### Possible improvments in the future
-* fix the form at the top to make it accessible at any moment;
-* note color selector depending on the theme of the note;
-* scroll to form when selecting notes.
+* fix the form at the top to make it accessible at any moment on the desk top and tablet versions;
+* note color selector depending on the theme of the note.
 
 ## Result
 
