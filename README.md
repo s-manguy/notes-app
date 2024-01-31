@@ -10,7 +10,6 @@ The full stack notes app has been built from scratch, using React, Node.js and P
 *  Validation on the UI and Backend
 *  Responsive on mobile screens
 
-
 ## Prerequisites
 *  Some knowledge about web development concepts (frontend, backend, databases, API's, REST).
 *  Some knowledge of JavaScript (variables, functions, objects, arrays, and so on).
@@ -99,9 +98,16 @@ const handleUpdateNote = async (event) => {
 * adding a note aspect change when selected and removed when unselected (the updating changes are canceled or saved);
 * preventing the user from selecting a new note when updating one (the changes are automatically cancelled and the aspect of the note being updated is reinitialized);
 * adding the confirm dialog modal before deleting a note.
+### I have improved the performance by:
+* using the useRef hook on the form fields (that means :
+  * replace value and onChange attributes by ref and onBlur attributes in the input and teaxtarea HTML tags, 
+  * create new methods to set the title and content properties when leaving the input and textarea fields,
+  * reset the input and textarea value to '' or null by resetting the ref values when ending the POST, PUT requests and when canceling the changes);
+* 
 ### Possible improvments in the future
 * fix the form at the top to make it accessible at any moment;
-* note color selector depending on the theme of the note.
+* note color selector depending on the theme of the note;
+* scroll to form when selecting notes.
 
 ## Result
 

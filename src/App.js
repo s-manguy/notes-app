@@ -1,15 +1,21 @@
 import './Styles/App.css';
 import './Styles/Form.css';
 import './Styles/Note.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 function App() {
   //  Populate the initial empty array with the data fetch from the API through the fetchNotes function
   const [notes, setNotes] = useState([]);
   const [title, setTitle] = useState(''); // Void by default
+  const titleRef = useRef(null); // Added by Sandrine MANGUY for performance optimization
   const [content, setContent] = useState(''); // Void by default
+  const contentRef = useRef(null); // Added by Sandrine MANGUY for performance optimization
   const [selectedNote, setSelectedNote] = useState(null); // Not selected by default
 
+  // Check the rendering number
+  console.log("render");
+
+  //  Get all the notes.
   useEffect(() => {
     //  Define the fetchNotes function
     const fetchNotes = async () => {
@@ -29,9 +35,25 @@ function App() {
     fetchNotes();
   }, []); // Only runs when the component is first mounted
 
+  // Added to set the input value before sending the POST and PUT requests
+  const handleInputOnBlur = () => {
+    setTitle(titleRef.current.value);
+  }
+ // Added to set the textarea value before sending the POST and PUT requests
+  const handleTextareaOnBlur = () => {
+    setContent(contentRef.current.value);
+  }
+
+  /*///////// */
+  /* Add note */
+  /*///////// */
   const handleAddNote = async (event) => {
     event.preventDefault();
 
+    // Check the title and content are already set before sending the request
+    // console.log(title);
+    // console.log(content);
+    
     try {
       const response = await fetch(
         "http://localhost:5000/api/notes",
@@ -49,13 +71,18 @@ function App() {
       const newNote = await response.json();
 
       setNotes([newNote, ...notes]); // The most recent notes is the first displayed
-      setTitle(''); // Clear the input
-      setContent(''); // Clear the input
+      titleRef.current.value = null; // Clear the input
+      setTitle(titleRef.current.value); // Clear the input
+      contentRef.current.value = null; // Clear the input
+      setContent(contentRef.current.value); // Clear the input
     } catch (error) {
       console.log(error);
     }
   };
 
+  /*//////////// */
+  /* Update note */
+  /*//////////// */
   const handleNoteClickedAspect = (noteId) => {
     let selectedNoteId = document.getElementById(noteId);
     selectedNoteId.style.border = "1px solid black";
@@ -67,8 +94,11 @@ function App() {
     if (selectedNote === null) {
       setSelectedNote(note); // Save the clicked note
       // console.log(note);
-      setTitle(note.title); // Populate the title in the form
-      setContent(note.content); // Populate the title in the form
+      setTitle(note.title); // Set the title in the state
+      setContent(note.content); // Set the title in the state
+      titleRef.current.value = note.title; // Populate the title in the form
+      contentRef.current.value = note.content; // Populate the title in the form
+
       handleNoteClickedAspect(note.id); 
     } else {
       handleCancel();
@@ -89,6 +119,10 @@ function App() {
     if (!selectedNote) {
       return;
     }
+
+    // Check the title and content data are set before sending the request.
+    // console.log(title);
+    // console.log(content);
 
     try {
       const response = await fetch (
@@ -112,8 +146,10 @@ function App() {
 
       handleNoteUnclickedAspect(selectedNote.id);
       setNotes(updatedNotesList); // Set the updated array in the state.
-      setTitle(""); // Clean the form by resetting the value to the initial state.
-      setContent(""); // Clean the form by resetting the value to the initial state.
+      titleRef.current.value = null; // Clear the input
+      setTitle(titleRef.current.value); // Set the input to the initial state
+      contentRef.current.value = null; // Clear the input
+      setContent(contentRef.current.value); // Set the textarea to teh initial state
       setSelectedNote(null); // Deselect the note by resetting the value to the initial state.
     } catch (error) {
       console.log(error);
@@ -122,11 +158,17 @@ function App() {
 
   const handleCancel = () => {
     handleNoteUnclickedAspect(selectedNote.id); // Remove the selected note aspect by resetting the initial CSS values.
-    setTitle(""); // Clean the form by resetting the value to the initial state.
-    setContent(""); // Clean the form by resetting the value to the initial state.
+    titleRef.current.value = null; // Clear the input
+    setTitle(titleRef.current.value); // Set the input state to the initial value
+    contentRef.current.value = null; // Clear the input
+    setContent(contentRef.current.value); // Set the textarea state to the initial value
     setSelectedNote(null); // Deselect the note by resetting the value to the initial state.
   };
   
+  /*//////////// */
+  /* Delete note */
+  /*//////////// */
+
   // Check the note must be deleted with confirm window. Added by Sandrine MANGUY
   const deleteNote = async (event, noteId) => {
     // Prevent the deleteNote event from interfering with the click event on the note itself.
@@ -150,8 +192,6 @@ function App() {
     }  
   };
 
-  
-
   return (
     <div className='app-container'>
       <form 
@@ -160,15 +200,15 @@ function App() {
         >
         <input 
           name="title"
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
+          ref={titleRef}
+          onBlur={handleInputOnBlur}
           type='text' 
           placeholder='Title' 
           required />
         <textarea 
           name="content"
-          value={content}
-          onChange={(event) => setContent(event.target.value)}
+          ref={contentRef}
+          onBlur={handleTextareaOnBlur}
           placeholder='Content' 
           row={10} 
           required />
@@ -182,28 +222,29 @@ function App() {
           <button type='submit'>Add note</button>
         )}
       </form>
+
       <div className='notes-grid'>
         {notes.map((note) => (
-            <div 
-              className='note-item' 
-              key={note.id} 
-              id={note.id} 
-              onClick={() => handleNoteClick(note)}
-            >
-            <div className='note-header'>
-              <button 
-              onClick={(event) => {
-                if(window.confirm("Please confirm you want to delete this note.")) {
-                  deleteNote(event, note.id)
-                }}}
-              >X</button>
-            </div>
-            <h2>{note.title}</h2>
-            <p>{note.content}</p>  
+          <div 
+            className='note-item' 
+            key={note.id} 
+            id={note.id} 
+            onClick={() => handleNoteClick(note)}
+          >
+          <div className='note-header'>
+            <button 
+            onClick={(event) => {
+              if(window.confirm("Please confirm you want to delete this note.")) {
+                deleteNote(event, note.id)
+              }}}
+            >X</button>
           </div>
-          ))
-        }
-      </div>
+          <h2>{note.title}</h2>
+          <p>{note.content}</p>  
+        </div>
+            ))
+          }
+        </div>
     </div>
   );
 }
