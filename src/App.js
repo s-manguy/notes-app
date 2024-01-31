@@ -1,3 +1,4 @@
+import ScrollButton from './Assets/ScrollButton';
 import './Styles/App.css';
 import './Styles/Form.css';
 import './Styles/Note.css';
@@ -6,10 +7,8 @@ import { useState, useEffect, useRef } from 'react';
 function App() {
   //  Populate the initial empty array with the data fetch from the API through the fetchNotes function
   const [notes, setNotes] = useState([]);
-  const [title, setTitle] = useState(''); // Void by default
-  const titleRef = useRef(null); // Added by Sandrine MANGUY for performance optimization
-  const [content, setContent] = useState(''); // Void by default
-  const contentRef = useRef(null); // Added by Sandrine MANGUY for performance optimization
+  const titleRef = useRef(null); // Replaced by Sandrine MANGUY for performance optimization
+  const contentRef = useRef(null); // Replaced by Sandrine MANGUY for performance optimization
   const [selectedNote, setSelectedNote] = useState(null); // Not selected by default
   const [visibilityButton, setVisibilityButton] = useState(false);
 
@@ -57,24 +56,11 @@ function App() {
     })
   };
 
-  // Added to set the input value before sending the POST and PUT requests
-  const handleInputOnBlur = () => {
-    setTitle(titleRef.current.value);
-  }
- // Added to set the textarea value before sending the POST and PUT requests
-  const handleTextareaOnBlur = () => {
-    setContent(contentRef.current.value);
-  }
-
   /*///////// */
   /* Add note */
   /*///////// */
   const handleAddNote = async (event) => {
     event.preventDefault();
-
-    // Check the title and content are already set before sending the request
-    // console.log(title);
-    // console.log(content);
     
     try {
       const response = await fetch(
@@ -85,8 +71,8 @@ function App() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            title,
-            content,
+            title: titleRef.current.value,
+            content: contentRef.current.value,
           }),
         }
       );
@@ -94,9 +80,7 @@ function App() {
 
       setNotes([newNote, ...notes]); // The most recent notes is the first displayed
       titleRef.current.value = null; // Clear the input
-      setTitle(titleRef.current.value); // Clear the input
       contentRef.current.value = null; // Clear the input
-      setContent(contentRef.current.value); // Clear the input
     } catch (error) {
       console.log(error);
     }
@@ -119,8 +103,6 @@ function App() {
       
       setSelectedNote(note); // Save the clicked note
       // console.log(note);
-      setTitle(note.title); // Set the title in the state
-      setContent(note.content); // Set the title in the state
       titleRef.current.value = note.title; // Added to Populate the title in the form improving performance
       contentRef.current.value = note.content; // Added to Populate the title in the form improving performance
 
@@ -146,10 +128,6 @@ function App() {
       return;
     }
 
-    // Check the title and content data are set before sending the request.
-    // console.log(title);
-    // console.log(content);
-
     try {
       const response = await fetch (
         `http://localhost:5000/api/notes/${selectedNote.id}`,
@@ -159,8 +137,8 @@ function App() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            title,
-            content,
+            title: titleRef.current.value,
+            content: contentRef.current.value,
           }),
         }
       );
@@ -173,9 +151,7 @@ function App() {
       handleNoteUnclickedAspect(selectedNote.id);
       setNotes(updatedNotesList); // Set the updated array in the state.
       titleRef.current.value = null; // Clear the input
-      setTitle(titleRef.current.value); // Set the input to the initial state
       contentRef.current.value = null; // Clear the input
-      setContent(contentRef.current.value); // Set the textarea to teh initial state
       setSelectedNote(null); // Deselect the note by resetting the value to the initial state.
     } catch (error) {
       console.log(error);
@@ -185,9 +161,7 @@ function App() {
   const handleCancel = () => {
     handleNoteUnclickedAspect(selectedNote.id); // Remove the selected note aspect by resetting the initial CSS values.
     titleRef.current.value = null; // Clear the input
-    setTitle(titleRef.current.value); // Set the input state to the initial value
     contentRef.current.value = null; // Clear the input
-    setContent(contentRef.current.value); // Set the textarea state to the initial value
     setSelectedNote(null); // Deselect the note by resetting the value to the initial state.
   };
   
@@ -229,7 +203,6 @@ function App() {
           id="title"
           name="title"
           ref={titleRef}
-          onBlur={handleInputOnBlur}
           type='text' 
           placeholder='Title' 
           required />
@@ -238,7 +211,6 @@ function App() {
           id="content"
           name="content"
           ref={contentRef}
-          onBlur={handleTextareaOnBlur}
           placeholder='Content' 
           row={10} 
           required />
@@ -252,7 +224,6 @@ function App() {
           <button type='submit'>Add note</button>
         )}
       </form>
-
       <div className='notes-grid'>
         {notes.map((note) => (
           <div 
@@ -276,10 +247,9 @@ function App() {
         }
       </div>
       { visibilityButton && (
-        <button 
-          className="scroll-button"
+        <ScrollButton
           onClick={handleScrollToTop}
-        >^</button>
+        />
       )}
     </div>
   );
