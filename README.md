@@ -32,23 +32,10 @@ In the App.js file, in the return(), add:
 #### Step 5 - Add the Note functionnality - Save Note Form
 #### Step 6 - Add the Update Note Functionnality
 #### step 7 - Add the Delete Note Functionnality
+
 ### Create the Backend
 Please refer to [notes-app-server](https://github.com/s-manguy/notes-app-server)
-#### Setup
-* I have not installed typescript.
-* I have added the "start" script in the package.json file but the indicated command didn't run so I have changed "npx nodemon" to "nodemon ./src/index.js" indicating the file path.
-* I have added a get route at the root 
-```javascript
-app.get('/', (req, res) => {
-  res.send('Welcome to my server!');
-});
-```
-#### Create a Postgres Database
-* I have created a free plan [ElephantSQL](https://www.elephantsql.com/) account.
-* Remark: Of course, it is possible to run SQL Query as indicated in the tutorial but... as there is no table created the given SQL command will run ! Moreover, as Prisma is used to create the table, it is better not to run SQL command before setting Prisma.
-#### Connect to DB from Node.js backend using Prisma
-* The connection URL can be found in the instance details. Do not forget to replace *** by the password.
-#### Create Endpoints
+
 ### Connect UI to backend
 * I have created the code for the handleUpdateNote as the one indicated in the tutorial is a copy-paste of the handleAddNote.
 ```javascript
@@ -92,22 +79,25 @@ const handleUpdateNote = async (event) => {
 ``` 
 
 ## Improvements 
-### I have improved the accessibility by:
+### I have improved the accessibility and UX by:
 * giving the notes a yellow background same as the post-it;
 * adding a padding bottom to the form to avoid the first note touch the form;
 * changing the "cancel" button background color from pink to grey when updating a note;
 * adding a note aspect change when selected and removed when unselected (the updating changes are canceled or saved);
 * preventing the user from selecting a new note when updating one (the changes are automatically cancelled and the aspect of the note being updated is reinitialized);
 * adding the confirm dialog modal before deleting a note;
-* adding label to each form field and a sr-only class to improve the screen reader accessibility;
+* adding label to each form field and a .sr-only class to improve the screen reader accessibility;
 * adding a scroll animation to the top of the form when clicking on a note to update it in the form;
-* adding a scroll button fiwed on the bottom right screen corner which appears when the pageYoffset is higher to 300px.
+* adding a scroll button fiwed on the bottom right screen corner which appears when the pageYoffset is higher to 300px;
+* cleaning the form before deleting any note.
 ### I have improved the performance by:
-* using the useRef hook on the form fields (that means :
-  * replace value and onChange attributes by ref and onBlur attributes in the input and teaxtarea HTML tags, 
-  * create new methods to set the title and content properties when leaving the input and textarea fields,
+* using the useRef hook on the form fields (that means : 
+  * no re-render every time a new character is typed in the field;
+  * only one re-render when clicking on the "Add Note" or "Save" or "Cancel" buttons;
   * reset the input and textarea value to '' or null by resetting the ref values when ending the POST, PUT requests and when canceling the changes);
-* 
+* using memo on the Note and the FormField components.
+### I have improved the code by:
+* cutting it in smaller components like FormField (which implies using forwardRef), Note or ScrollButton.
 ### Possible improvments in the future
 * fix the form at the top to make it accessible at any moment on the desk top and tablet versions;
 * note color selector depending on the theme of the note.
