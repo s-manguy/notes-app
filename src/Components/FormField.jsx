@@ -1,3 +1,10 @@
+// Component extracted from the original App.js file by Sandrine MANGUY
+// Label and .sr-only class added by Sandrine MANGUY
+// Use of:
+//  - refs instead of state to improve performance, 
+//  - forwardref to keep the ref value when put in a component, 
+//  - memo to improve performance and avoid not necessary rerender
+
 import { forwardRef, memo } from "react";
 
 const FormField = memo(forwardRef(function FormField ({tagName, label, id, placeholder, row}, ref) {

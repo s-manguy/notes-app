@@ -1,3 +1,9 @@
+// Component created by Sandrine MANGUY
+// code extracted from the original App.js file
+// Use of:
+//  - memo to improve the performance by avoiding not ncesary rerenders;
+//  - confirm() added to improve the UX.
+
 import {memo} from 'react';
 
 const Note = memo(function Note({note, onNoteClick, onDeleteNote}) {

@@ -1,18 +1,18 @@
-import ScrollButton from './Assets/ScrollButton';
-import Note from './Components/Note';
-import FormField from './Components/FormField';
-import './Styles/App.css';
-import './Styles/Form.css';
-import './Styles/Note.css';
-import { useState, useEffect, useRef } from 'react';
+import ScrollButton from './Assets/ScrollButton'; // Feature created by Sandrine MANGUY
+import Note from './Components/Note'; // Component created by Sandrine MANGUY
+import FormField from './Components/FormField'; // Component created by Sandrine MANGUY
+import './Styles/App.css'; // File modified by Sandrine MANGUY
+import './Styles/Form.css'; // File created by Sandrine MANGUY
+import './Styles/Note.css'; // File created by Sandrine MANGUY
+import { useState, useEffect, useRef } from 'react'; // useRef added by Sandrine MANGUY
 
 function App() {
   //  Populate the initial empty array with the data fetch from the API through the fetchNotes function
   const [notes, setNotes] = useState([]);
-  const titleRef = useRef(null); // Replaced by Sandrine MANGUY for performance optimization
-  const contentRef = useRef(null); // Replaced by Sandrine MANGUY for performance optimization
+  const titleRef = useRef(null); // useState replaced by Sandrine MANGUY for performance optimization
+  const contentRef = useRef(null); // useState replaced by Sandrine MANGUY for performance optimization
   const [selectedNote, setSelectedNote] = useState(null); // Not selected by default
-  const [visibilityButton, setVisibilityButton] = useState(false);
+  const [visibilityButton, setVisibilityButton] = useState(false); // State added by Sandrine MANGUY
 
   // Check the rendering number
   console.log("render");
@@ -37,7 +37,7 @@ function App() {
     fetchNotes();
   }, []); // Only runs when the component is first mounted
 
-  // Scroll button visibility
+  // Scroll button visibility added by Sandrine MANGUY
   useEffect(() => {
     const handleScrollButtonVisibility = () => {
       window.scrollY > 300 ? setVisibilityButton(true) : setVisibilityButton(false);
@@ -50,7 +50,7 @@ function App() {
     }
   }, []);// Only runs when the component is first mounted
 
-  // Added to improve the accessibility
+  // Added to improve the accessibility by Sandrine MANGUY
   const handleScrollToTop = () => {
       window.scrollTo({
         top: 0,
@@ -81,8 +81,8 @@ function App() {
       const newNote = await response.json();
 
       setNotes([newNote, ...notes]); // The most recent notes is the first displayed
-      titleRef.current.value = null; // Clear the input
-      contentRef.current.value = null; // Clear the input
+      titleRef.current.value = null; // Clear the input ; state replaced by ref by Sandrine MANGUY to improve performance
+      contentRef.current.value = null; // Clear the input ; state replaced by ref by Sandrine MANGUY to improve performance
     } catch (error) {
       console.log(error);
     }
@@ -91,7 +91,7 @@ function App() {
   /*//////////// */
   /* Update note */
   /*//////////// */
-  // Added to improve the accessibility and the UX
+  // Added by Sandrine MANGUY to improve the accessibility and the UX
   const handleNoteClickedAspect = (noteId) => {
     let selectedNoteId = document.getElementById(noteId);
     selectedNoteId.style.border = "1px solid black";
@@ -99,22 +99,24 @@ function App() {
   }
 
   const handleNoteClick = (note) => {
-    // prevent the user from selecting many notes and make him cancel the previous selection
+    // If-else added by Sandrine MANGUY
+    // to prevent the user from selecting many notes and 
+    // make him cancel the previous selection
     if (selectedNote === null) {
-      handleScrollToTop();// Added to scroll to the filled form to apply changes
+      handleScrollToTop();// Added by Sandrine MANGUY to scroll to the filled form to apply changes
       
       setSelectedNote(note); // Save the clicked note
       // console.log(note);
-      titleRef.current.value = note.title; // Added to Populate the title in the form improving performance
-      contentRef.current.value = note.content; // Added to Populate the title in the form improving performance
+      titleRef.current.value = note.title; // State repkace by ref by Sandrine MANGUY to Populate the title in the form improving performance
+      contentRef.current.value = note.content; // State repkace by ref by Sandrine MANGUY  to Populate the title in the form improving performance
 
-      handleNoteClickedAspect(note.id); // Added to improve the UX
+      handleNoteClickedAspect(note.id); // Added by Sandrine MANGUY to improve the UX
     } else {
       handleCancel();
     }
   };
 
-  // Added to improve the accessibility and the UX
+  // Added by Sandrine MANGUY to improve the accessibility and the UX
   const handleNoteUnclickedAspect = (noteId) => {
     let selectedNoteId = document.getElementById(noteId);
     selectedNoteId.style.border = "1px solid #ccc";
@@ -125,7 +127,9 @@ function App() {
     // Prevent the form from automatically submitting when the "Save" button is clicked.
     event.preventDefault();
 
-    // Check if a note is selected. If not, exits the function early to prevent potential errors.
+    // Condition added by Sandrine MANGUY
+    // Check if a note is selected. If not, 
+    // exits the function early to prevent potential errors.
     if (!selectedNote) {
       return;
     }
@@ -152,8 +156,8 @@ function App() {
 
       handleNoteUnclickedAspect(selectedNote.id);
       setNotes(updatedNotesList); // Set the updated array in the state.
-      titleRef.current.value = null; // Clear the input
-      contentRef.current.value = null; // Clear the input
+      titleRef.current.value = null; // Clear the input ; state replace by ref by Sandrine MANGUY to improve performance
+      contentRef.current.value = null; // Clear the input ; state replace by ref by Sandrine MANGUY to improve performance
       setSelectedNote(null); // Deselect the note by resetting the value to the initial state.
     } catch (error) {
       console.log(error);
@@ -170,7 +174,8 @@ function App() {
   /*//////////// */
   /* Delete note */
   /*//////////// */
-  // Check the note must be deleted with confirm window. Added by Sandrine MANGUY
+  // Check that the note must be deleted with confirm window. 
+  // Added by Sandrine MANGUY for UX reason
   const deleteNote = async (event, noteId) => {
     // Prevent the deleteNote event from interfering with the click event on the note itself.
     event.stopPropagation();
@@ -179,6 +184,7 @@ function App() {
     // because in case the note to be deleted has been selected, 
     // it won't be possible to clean the form after deleting the note.
     // Then clean the form whatever is the selected note.
+    // Added by Sandrine MANGUY
     if (selectedNote) {
       handleCancel(); // clean the form
     }
@@ -213,14 +219,14 @@ function App() {
               id="title"
               placeholder="Title"
               ref={titleRef}
-              />
+              /> {/*  Component created by Sandrine MANGUY*/ }
           <FormField 
               tagName="textarea"
               id="content"
               placeholder="Content"
               row={10}
               ref={contentRef}
-              />
+              /> {/*  Component created by Sandrine MANGUY*/ }
         {selectedNote ? (
           <div className='edit-buttons'>
             <button type='submit'>Save</button>
@@ -246,7 +252,7 @@ function App() {
         <ScrollButton
           onClick={handleScrollToTop}
         />
-      )}
+      )} {/*  Component and condition created by Sandrine MANGUY*/ }
     </div>
   );
 }

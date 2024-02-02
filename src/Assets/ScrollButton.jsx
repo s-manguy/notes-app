@@ -1,3 +1,5 @@
+// Feature/Component added by Sandrine MANGUY
+
 import '../Styles/ScrollButton.css';
 
 const ScrollButton = ({onClick}) => {
