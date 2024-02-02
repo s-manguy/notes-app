@@ -90,6 +90,7 @@ const handleUpdateNote = async (event) => {
 * adding a scroll animation to the top of the form when clicking on a note to update it in the form;
 * adding a scroll button fiwed on the bottom right screen corner which appears when the pageYoffset is higher to 300px;
 * cleaning the form before deleting any note.
+
 ### I have improved the performance by:
 * using the useRef hook on the form fields (that means : 
   * no re-render every time a new character is typed in the field;
