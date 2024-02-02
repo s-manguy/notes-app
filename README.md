@@ -92,22 +92,25 @@ const handleUpdateNote = async (event) => {
 ``` 
 
 ## Improvements 
-### I have improved the accessibility by:
+### I have improved the accessibility and UX by:
 * giving the notes a yellow background same as the post-it;
 * adding a padding bottom to the form to avoid the first note touch the form;
 * changing the "cancel" button background color from pink to grey when updating a note;
 * adding a note aspect change when selected and removed when unselected (the updating changes are canceled or saved);
 * preventing the user from selecting a new note when updating one (the changes are automatically cancelled and the aspect of the note being updated is reinitialized);
 * adding the confirm dialog modal before deleting a note;
-* adding label to each form field and a sr-only class to improve the screen reader accessibility;
+* adding label to each form field and a .sr-only class to improve the screen reader accessibility;
 * adding a scroll animation to the top of the form when clicking on a note to update it in the form;
-* adding a scroll button fiwed on the bottom right screen corner which appears when the pageYoffset is higher to 300px.
+* adding a scroll button fiwed on the bottom right screen corner which appears when the pageYoffset is higher to 300px;
+* cleaning the form before deleting any note.
 ### I have improved the performance by:
-* using the useRef hook on the form fields (that means :
-  * replace value and onChange attributes by ref and onBlur attributes in the input and teaxtarea HTML tags, 
-  * create new methods to set the title and content properties when leaving the input and textarea fields,
+* using the useRef hook on the form fields (that means : 
+  * no re-render every time a new character is typed in the field;
+  * only one re-render when clicking on the "Add Note" or "Save" or "Cancel" buttons;
   * reset the input and textarea value to '' or null by resetting the ref values when ending the POST, PUT requests and when canceling the changes);
-* 
+* using memo on the Note and the FormField components.
+### I have improved the code by:
+* cutting it in smaller components like FormField (which implies using forwardRef), Note or ScrollButton.
 ### Possible improvments in the future
 * fix the form at the top to make it accessible at any moment on the desk top and tablet versions;
 * note color selector depending on the theme of the note.
