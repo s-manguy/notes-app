@@ -175,6 +175,14 @@ function App() {
     // Prevent the deleteNote event from interfering with the click event on the note itself.
     event.stopPropagation();
 
+    // Check if there is a selected note in the form 
+    // because in case the note to be deleted has been selected, 
+    // it won't be possible to clean the form after deleting the note.
+    // Then clean the form whatever is the selected note.
+    if (selectedNote) {
+      handleCancel(); // clean the form
+    }
+
     try {
       await fetch(
         `http://localhost:5000/api/notes/${noteId}`,
@@ -192,6 +200,7 @@ function App() {
       console.log(error);
     }  
   };
+
 
   return (
     <div className='app-container'>
