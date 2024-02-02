@@ -1,4 +1,6 @@
 import ScrollButton from './Assets/ScrollButton';
+import Note from './Components/Note';
+import FormField from './Components/FormField';
 import './Styles/App.css';
 import './Styles/Form.css';
 import './Styles/Note.css';
@@ -168,7 +170,6 @@ function App() {
   /*//////////// */
   /* Delete note */
   /*//////////// */
-
   // Check the note must be deleted with confirm window. Added by Sandrine MANGUY
   const deleteNote = async (event, noteId) => {
     // Prevent the deleteNote event from interfering with the click event on the note itself.
@@ -198,22 +199,19 @@ function App() {
         className='note-form'
         onSubmit={(event) => (selectedNote ? handleUpdateNote(event) : handleAddNote(event))}
         >
-        <label htmlFor="title"  className='sr-only'>Note Title</label>
-        <input 
-          id="title"
-          name="title"
-          ref={titleRef}
-          type='text' 
-          placeholder='Title' 
-          required />
-        <label htmlFor="content" className='sr-only'>Note Title</label>
-        <textarea 
-          id="content"
-          name="content"
-          ref={contentRef}
-          placeholder='Content' 
-          row={10} 
-          required />
+          <FormField 
+              tagName="input"
+              id="title"
+              placeholder="Title"
+              ref={titleRef}
+              />
+          <FormField 
+              tagName="textarea"
+              id="content"
+              placeholder="Content"
+              row={10}
+              ref={contentRef}
+              />
         {selectedNote ? (
           <div className='edit-buttons'>
             <button type='submit'>Save</button>
@@ -226,23 +224,12 @@ function App() {
       </form>
       <div className='notes-grid'>
         {notes.map((note) => (
-          <div 
-            className='note-item' 
-            key={note.id} 
-            id={note.id} 
-            onClick={() => handleNoteClick(note)}
-          >
-            <div className='note-header'>
-              <button 
-                onClick={(event) => {
-                  if(window.confirm("Please confirm you want to delete this note.")) {
-                  deleteNote(event, note.id)
-                }}}
-              >X</button>
-            </div>
-            <h2>{note.title}</h2>
-            <p>{note.content}</p>  
-          </div>
+          <Note
+            note={note}
+            onNoteClick={handleNoteClick}
+            onDeleteNote={deleteNote}
+            key={note.id}
+          />
           ))
         }
       </div>

@@ -1,6 +1,6 @@
 import '../Styles/ScrollButton.css';
 
-const ScrollButton = (onClick) => {
+const ScrollButton = ({onClick}) => {
     return (
         <button 
           className="scroll-button"
