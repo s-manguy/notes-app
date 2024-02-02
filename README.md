@@ -88,14 +88,15 @@ const handleUpdateNote = async (event) => {
 * adding the confirm dialog modal before deleting a note;
 * adding label to each form field and a .sr-only class to improve the screen reader accessibility;
 * adding a scroll animation to the top of the form when clicking on a note to update it in the form;
-* adding a scroll button fiwed on the bottom right screen corner which appears when the pageYoffset is higher to 300px;
-* cleaning the form before deleting any note.
-
+* adding a scroll button fixed on the bottom right screen corner which appears when the pageYoffset is higher to 300px.
 ### I have improved the performance by:
 * using the useRef hook on the form fields (that means : 
   * no re-render every time a new character is typed in the field;
   * only one re-render when clicking on the "Add Note" or "Save" or "Cancel" buttons;
   * reset the input and textarea value to '' or null by resetting the ref values when ending the POST, PUT requests and when canceling the changes);
+* using memo on the Note and the FormField components.
+### I have improved the code by:
+* cutting it in smaller components like FormField (which implies using forwardRef), Note or ScrollButton.
 * using memo on the Note and the FormField components.
 ### I have improved the code by:
 * cutting it in smaller components like FormField (which implies using forwardRef), Note or ScrollButton.
