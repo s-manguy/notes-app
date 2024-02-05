@@ -5,6 +5,7 @@ import './Styles/App.css'; // File modified by Sandrine MANGUY
 import './Styles/Form.css'; // File created by Sandrine MANGUY
 import './Styles/Note.css'; // File created by Sandrine MANGUY
 import { useState, useEffect, useRef } from 'react'; // useRef added by Sandrine MANGUY
+import Info from './Components/Info';
 
 function App() {
   //  Populate the initial empty array with the data fetch from the API through the fetchNotes function
@@ -210,33 +211,38 @@ function App() {
 
   return (
     <div className='app-container'>
-      <form 
-        className='note-form'
-        onSubmit={(event) => (selectedNote ? handleUpdateNote(event) : handleAddNote(event))}
-        >
-          <FormField 
-              tagName="input"
-              id="title"
-              placeholder="Title"
-              ref={titleRef}
-              /> {/*  Component created by Sandrine MANGUY*/ }
-          <FormField 
-              tagName="textarea"
-              id="content"
-              placeholder="Content"
-              row={10}
-              ref={contentRef}
-              /> {/*  Component created by Sandrine MANGUY*/ }
-        {selectedNote ? (
-          <div className='edit-buttons'>
-            <button type='submit'>Save</button>
-            <button onClick={handleCancel}>Cancel</button>
-          </div>
-        )
-        : (
-          <button type='submit'>Add note</button>
-        )}
-      </form>
+      <div> {/* Added by Sandrine MANGUY */}
+        <h1>Notes App</h1> {/* Added by Sandrine MANGUY */}
+        <p className='subtitle'>realized by<br/>Sandrine MANGUY</p> {/* Added by Sandrine MANGUY */}
+        <form 
+          className='note-form'
+          onSubmit={(event) => (selectedNote ? handleUpdateNote(event) : handleAddNote(event))}
+          >
+            <FormField 
+                tagName="input"
+                id="title"
+                placeholder="Title"
+                ref={titleRef}
+                /> {/*  Component created by Sandrine MANGUY*/ }
+            <FormField 
+                tagName="textarea"
+                id="content"
+                placeholder="Content"
+                row={10}
+                ref={contentRef}
+                /> {/*  Component created by Sandrine MANGUY*/ }
+          {selectedNote ? (
+            <div className='edit-buttons'>
+              <button type='submit'>Save</button>
+              <button onClick={handleCancel}>Cancel</button>
+            </div>
+          )
+          : (
+            <button type='submit'>Add note</button>
+          )}
+          <Info /> {/* Added by Sandrine MANGUY */}
+        </form>
+      </div>
       <div className='notes-grid'>
         {notes.map((note) => (
           <Note

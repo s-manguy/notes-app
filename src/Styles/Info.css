@@ -1,0 +1,50 @@
+.info {
+    font-size: 1.8rem;
+    padding: calc(var(--spacing)/2);
+    margin-top: var(--spacing);
+    background-color: var(--whitesmoke-90);
+}
+  
+.info-title {
+    font-size: 1.6rem;
+    color: var(--primary-color);
+}
+
+.info-title:focus {
+    color: black;
+}
+
+.info-icon {
+    display: inline-block;
+    width: 2rem; 
+    height: 2rem;
+    font-weight: initial;
+    fill: var(--primary-color);
+}
+
+.info-title:hover .info-icon {
+    fill: var(--primary-color--dark);
+}
+
+.info-title:focus .info-icon {
+    fill: black;
+}
+
+.info-item {
+    border-top: 0.1rem solid black;
+    padding: 1rem 0 ;
+}
+
+.info-item:first-of-type {
+    margin-top: calc(var(--spacing)/2);
+}
+
+.info-crud {
+text-transform: uppercase;
+font-weight: 700;
+}
+  
+.info-steps {
+margin-left: calc(var(--spacing)*2);
+margin-top: calc(var(--spacing)*0.25);
+}

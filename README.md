@@ -88,7 +88,9 @@ const handleUpdateNote = async (event) => {
 * adding the confirm dialog modal before deleting a note;
 * adding label to each form field and a .sr-only class to improve the screen reader accessibility;
 * adding a scroll animation to the top of the form when clicking on a note to update it in the form;
-* adding a scroll button fixed on the bottom right screen corner which appears when the pageYoffset is higher to 300px.
+* adding a scroll button fixed on the bottom right screen corner which appears when the pageYoffset is higher to 300px
+* adding a h1 tag containing the name of the app;
+* adding help/info via a details tag close to the form and adjusting the info/form column width to improve the reading.
 ### I have improved the performance by:
 * using the useRef hook on the form fields (that means : 
   * no re-render every time a new character is typed in the field;
@@ -100,8 +102,7 @@ const handleUpdateNote = async (event) => {
 * using memo on the Note and the FormField components.
 ### I have improved the code by:
 * cutting it in smaller components like FormField (which implies using forwardRef), Note or ScrollButton.
-### Possible improvments in the future
-* fix the form at the top to make it accessible at any moment on the desk top and tablet versions;
+### Possible improvment in the future:
 * note color selector depending on the theme of the note.
 
 ## Result
