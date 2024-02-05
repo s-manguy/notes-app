@@ -106,9 +106,9 @@ const handleUpdateNote = async (event) => {
 * note color selector depending on the theme of the note.
 
 ## Result
-![mobile version](https://github.com/s-manguy/notes-app/blob/main/mobile_version.png)
-![tablet version](https://github.com/s-manguy/notes-app/blob/main/Ipad_version.png)
-![desktop version](https://github.com/s-manguy/notes-app/blob/main/Desktop_version.png)
+![mobile version](https://github.com/s-manguy/notes-app/blob/main/screenshot_mobile_version.png)
+![tablet version](https://github.com/s-manguy/notes-app/blob/main/screenshot_ipad_version.png)
+![desktop version](https://github.com/s-manguy/notes-app/blob/main/screenshot_desktop_version.png)
 
 <!-- # Getting Started with Create React App
 
