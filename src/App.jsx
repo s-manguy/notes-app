@@ -5,7 +5,7 @@ import './Styles/App.css'; // File modified by Sandrine MANGUY
 import './Styles/Form.css'; // File created by Sandrine MANGUY
 import './Styles/Note.css'; // File created by Sandrine MANGUY
 import { useState, useEffect, useRef } from 'react'; // useRef added by Sandrine MANGUY
-import Info from './Components/Info';
+import Info from './Components/Info'; // Component created by Sandrine MANGUY
 
 function App() {
   //  Populate the initial empty array with the data fetch from the API through the fetchNotes function
@@ -211,12 +211,13 @@ function App() {
 
   return (
     <div className='app-container'>
-      <div> {/* Added by Sandrine MANGUY */}
-        <h1>Notes App</h1> {/* Added by Sandrine MANGUY */}
-        <p className='subtitle'>realized by<br/>Sandrine MANGUY</p> {/* Added by Sandrine MANGUY */}
+      <div aria-label="dashboard"> {/* Added by Sandrine MANGUY */}
+        <h1 aria-label="app name">Notes App</h1> {/* Added by Sandrine MANGUY */}
+        <p className='subtitle' aria-label="author name">realized by<br/>Sandrine MANGUY</p> {/* Added by Sandrine MANGUY */}
         <form 
           className='note-form'
           onSubmit={(event) => (selectedNote ? handleUpdateNote(event) : handleAddNote(event))}
+          aria-label='add and update note form'
           >
             <FormField 
                 tagName="input"
@@ -233,17 +234,17 @@ function App() {
                 /> {/*  Component created by Sandrine MANGUY*/ }
           {selectedNote ? (
             <div className='edit-buttons'>
-              <button type='submit'>Save</button>
-              <button onClick={handleCancel}>Cancel</button>
+              <button type='submit' aria-label='update note button'>Save</button>
+              <button onClick={handleCancel} aria-label='cancel updating button'>Cancel</button>
             </div>
           )
           : (
-            <button type='submit'>Add note</button>
+            <button type='submit' aria-label="add note button">Add note</button>
           )}
           <Info /> {/* Added by Sandrine MANGUY */}
         </form>
       </div>
-      <div className='notes-grid'>
+      <div className='notes-grid' aria-label="displayed notes area">
         {notes.map((note) => (
           <Note
             note={note}

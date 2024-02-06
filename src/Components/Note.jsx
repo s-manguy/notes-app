@@ -5,6 +5,7 @@
 //  - confirm() added to improve the UX.
 
 import {memo} from 'react';
+import { PropTypes } from "prop-types";
 
 const Note = memo(function Note({note, onNoteClick, onDeleteNote}) {
     return (
@@ -12,20 +13,29 @@ const Note = memo(function Note({note, onNoteClick, onDeleteNote}) {
             className='note-item' 
             id={note.id} 
             onClick={() => onNoteClick(note)}
+            aria-label='note'
           >
-            <div className='note-header'>
+            <div className='note-header' aria-label='delete note button area'>
               <button 
+                aria-label='delete note button'
                 onClick={(event) => {
                             if(window.confirm("Please confirm you want to delete this note.")) {
                             onDeleteNote(event, note.id)
                           }}}
               >X</button>
             </div>
-            <h2>{note.title}</h2>
-            <p>{note.content}</p>  
+            <h2 aria_label="note title">{note.title}</h2>
+            <p aria_label="note content">{note.content}</p>  
           </div>
     )
 });
+
+
+Note.PropTypes = {
+  note: PropTypes.object,
+  onNoteClick: PropTypes.func,
+  onDeleteNote: PropTypes.func,
+};
 
 export default Note;
 

@@ -6,6 +6,7 @@
 //  - memo to improve performance and avoid not necessary rerender
 
 import { forwardRef, memo } from "react";
+import { PropTypes } from 'prop-types';
 
 const FormField = memo(forwardRef(function FormField ({tagName, label, id, placeholder, row}, ref) {
    if (tagName === 'input') {
@@ -37,6 +38,15 @@ const FormField = memo(forwardRef(function FormField ({tagName, label, id, place
         )
    }
 }));
+
+
+FormField.PropTypes = {
+    tagName: PropTypes.string,
+    label: PropTypes.string,
+    id: PropTypes.string,
+    placeholder: PropTypes.string,
+    row: PropTypes.number,
+};
 
 export default FormField;
 

@@ -5,9 +5,9 @@ import {ReactComponent as InfoIcon} from '../Assets/circle-info-solid.svg'; /* t
 
 const Info = () => {
     return (
-        <details className='info'>
+        <details className='info' aria-label="accordion help block">
             <summary className='info-title'>Help <i className='info-icon' aria-hidden="true"><InfoIcon /></i></summary>
-            <div>
+            <div aria-label="info block">
               <details className='info-item'>
                 <summary>How to <span className='info-crud'>ADD</span> a note?</summary>
                   <ol className='info-steps'>
