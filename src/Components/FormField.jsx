@@ -40,11 +40,11 @@ const FormField = memo(forwardRef(function FormField ({tagName, label, id, place
 }));
 
 
-FormField.PropTypes = {
-    tagName: PropTypes.string,
-    label: PropTypes.string,
-    id: PropTypes.string,
-    placeholder: PropTypes.string,
+FormField.propTypes = {
+    tagName: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    placeholder: PropTypes.string.isRequired,
     row: PropTypes.number,
 };
 

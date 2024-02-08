@@ -4,7 +4,7 @@ import FormField from './Components/FormField'; // Component created by Sandrine
 import './Styles/App.css'; // File modified by Sandrine MANGUY
 import './Styles/Form.css'; // File created by Sandrine MANGUY
 import './Styles/Note.css'; // File created by Sandrine MANGUY
-import { useState, useEffect, useRef } from 'react'; // useRef added by Sandrine MANGUY
+import { useState, useEffect, useRef, useCallback } from 'react'; // useRef added by Sandrine MANGUY
 import Info from './Components/Info'; // Component created by Sandrine MANGUY
 
 function App() {
@@ -52,17 +52,17 @@ function App() {
   }, []);// Only runs when the component is first mounted
 
   // Added to improve the accessibility by Sandrine MANGUY
-  const handleScrollToTop = () => {
+  const handleScrollToTop = useCallback(() => {
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
     })
-  };
+  }, []);
 
   /*///////// */
   /* Add note */
   /*///////// */
-  const handleAddNote = async (event) => {
+  const handleAddNote = useCallback(async (event) => {
     event.preventDefault();
     
     try {
@@ -87,19 +87,34 @@ function App() {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [notes]);
 
   /*//////////// */
   /* Update note */
   /*//////////// */
   // Added by Sandrine MANGUY to improve the accessibility and the UX
-  const handleNoteClickedAspect = (noteId) => {
+  const handleNoteClickedAspect = useCallback((noteId) => {
     let selectedNoteId = document.getElementById(noteId);
     selectedNoteId.style.border = "1px solid black";
     selectedNoteId.style.boxShadow = "3px 3px 10px";
-  }
+  }, []);
 
-  const handleNoteClick = (note) => {
+  // Added by Sandrine MANGUY to improve the accessibility and the UX
+  const handleNoteUnclickedAspect = useCallback((noteId) => {
+    let selectedNoteId = document.getElementById(noteId);
+    selectedNoteId.style.border = "1px solid #ccc";
+    selectedNoteId.style.boxShadow = "none";
+  }, []);
+
+  const handleCancel = useCallback(() => {
+    handleNoteUnclickedAspect(selectedNote.id); // Remove the selected note aspect by resetting the initial CSS values.
+    titleRef.current.value = null; // Clear the input
+    contentRef.current.value = null; // Clear the input
+    setSelectedNote(null); // Deselect the note by resetting the value to the initial state.
+  }, [handleNoteUnclickedAspect, selectedNote]);
+
+
+  const handleNoteClick = useCallback((note) => {
     // If-else added by Sandrine MANGUY
     // to prevent the user from selecting many notes and 
     // make him cancel the previous selection
@@ -115,16 +130,10 @@ function App() {
     } else {
       handleCancel();
     }
-  };
+  }, [handleScrollToTop, handleNoteClickedAspect, handleCancel, selectedNote ]);
 
-  // Added by Sandrine MANGUY to improve the accessibility and the UX
-  const handleNoteUnclickedAspect = (noteId) => {
-    let selectedNoteId = document.getElementById(noteId);
-    selectedNoteId.style.border = "1px solid #ccc";
-    selectedNoteId.style.boxShadow = "none";
-  }
 
-  const handleUpdateNote = async (event) => {
+  const handleUpdateNote = useCallback(async (event) => {
     // Prevent the form from automatically submitting when the "Save" button is clicked.
     event.preventDefault();
 
@@ -163,21 +172,16 @@ function App() {
     } catch (error) {
       console.log(error);
     }  
-  };
+  }, [handleNoteUnclickedAspect, notes, selectedNote]);
 
-  const handleCancel = () => {
-    handleNoteUnclickedAspect(selectedNote.id); // Remove the selected note aspect by resetting the initial CSS values.
-    titleRef.current.value = null; // Clear the input
-    contentRef.current.value = null; // Clear the input
-    setSelectedNote(null); // Deselect the note by resetting the value to the initial state.
-  };
+
   
   /*//////////// */
   /* Delete note */
   /*//////////// */
   // Check that the note must be deleted with confirm window. 
   // Added by Sandrine MANGUY for UX reason
-  const deleteNote = async (event, noteId) => {
+  const deleteNote = useCallback(async (event, noteId) => {
     // Prevent the deleteNote event from interfering with the click event on the note itself.
     event.stopPropagation();
 
@@ -206,7 +210,7 @@ function App() {
     } catch (error) {
       console.log(error);
     }  
-  };
+  }, [handleCancel, notes, selectedNote]);
 
 
   return (
@@ -221,12 +225,14 @@ function App() {
           >
             <FormField 
                 tagName="input"
+                label="Title"
                 id="title"
                 placeholder="Title"
                 ref={titleRef}
                 /> {/*  Component created by Sandrine MANGUY*/ }
             <FormField 
                 tagName="textarea"
+                label="Content"
                 id="content"
                 placeholder="Content"
                 row={10}
